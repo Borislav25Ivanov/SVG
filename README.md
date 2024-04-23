@@ -1,2 +1,2 @@
 # SVG
- Project for OOP 2024
+Final project for OOP course 2024 sofia university
