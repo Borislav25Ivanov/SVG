@@ -11,6 +11,6 @@ class Figure{
     protected:
     std::string fill;   
     std::string stroke;
-    double strokeWidth;
+    double strokeWidth = 0;
 };
 #endif 

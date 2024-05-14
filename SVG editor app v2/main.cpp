@@ -1,8 +1,7 @@
 #include <iostream>
-#include<vector>
+#include <vector>
 #include <sstream>
 #include <fstream>
-#include <algorithm>
 #include "line.hpp"
 #include "circle.hpp"
 #include "rectangle.hpp"
@@ -35,18 +34,36 @@ Figure * Factory(std::stringstream& in){
         }
         return temp;
 }
+
+
+
 void Open(string fileLoc){
     std::stringstream sso;
     std::ifstream in;
     in.open(fileLoc.c_str());
     string word;
-    while(in>>word){
-        sso<<word;
+    if(in){
+        sso<<in.rdbuf();
+        in.close();
     }
+    else{std::cout<< "error";}
     while (sso>>word)
     {
-        std::cout<<word;
+        if(word == "<rect"){
+            Figure * fig = new Rectangle(sso);  
+            figures.push_back(fig);
+        }
+        else if(word=="<circle"){
+            Figure * fig = new Circle(sso);
+            figures.push_back(fig);
+        }
+        else if(word == "<line"){
+            Figure * fig = new Line(sso);
+            figures.push_back(fig);
+        }
     }
+    
+
     
 }
 void Print(){
@@ -137,6 +154,9 @@ int main(){
             string fileLoc;
             std::cin>>fileLoc;
             Open(fileLoc);
+        }
+        else if(input == "save as"){
+            
         }
         std::cin>>input;
     }

@@ -9,18 +9,72 @@
         this->fill = fill;
     }
     Circle::Circle(){
-        this->cx = 0;
-        this->cy = 0;
-        this->r = 0;
-        this->strokeWidth = 0.0;
 
     }
+    Circle::Circle(std::stringstream& sso){
+        std::string word;
+        while (sso>>word)
+        {
+            if(word.back() != '>'){
+        
+                if(word.find("cx") != std::string::npos){
+                    for(char c : word){
+                        if(c>='0' && c<='9'){
+                            cx*=10;
+                            cx+=c-'0';
+                        }
+                    }
+                }
+                if(word.find("cy") != std::string::npos){
+                    
+                    for(char c : word){
+                        if(c>='0' && c<='9'){
+                            cy*=10;
+                            cy+=c-'0';
+                        }
+                    }
+                }
+                if(word.front() == 'r'){
+                    for(char c : word){
+                        if(c>='0' && c<='9'){
+                            r*=10;
+                            r+=c-'0';
+                        }
+                    }
+                }
+                
+                
+                if(word.find("stroke") != std::string::npos && word.find("stroke-width") == std::string::npos){
+                    stroke = word.substr(word.find("\"")+1);
+                    stroke.pop_back();
+                }
+                if(word.front() == 'f'){
+                    fill = word.substr(word.find("\"")+1);
+                    fill.pop_back();
+                } 
+
+                if(word.find("stroke-width") != std::string::npos ){
+                    for(char c : word){
+                        if(c>='0' && c<='9'){
+                            strokeWidth*=10;
+                            strokeWidth+=c-'0';
+                        }
+                    }
+                }                  
+            }
+            else{
+                break;
+            } 
+        }   
+    }
+            
+    
     void Circle::PrintToFile(std::ostream &out)const{
         out<<"<circle "<<"cx=\""<<this->cx<<"\""<<' '<<"cy=\""<<this->cy<<"\""<<' '<<"r=\""<<this->r<<"\""<<' '
-           <<"fill=\""<<this->fill<<"\""<<' '<<'/'<<'>';
+           <<"fill=\""<<this->fill<<"\""<<' '<<"stroke=\""<<this->stroke<<"\""<<' '<<"stroke-width=\""<<this->strokeWidth<<"\""<<' '<<'/'<<'>';
     }
     void Circle::Print()const{
-        std::cout<<"circle "<<this->cx<<' '<<this->cy<<' '<<this->r<<' '<<this->fill;
+        std::cout<<"circle "<<this->cx<<' '<<this->cy<<' '<<this->r<<' '<<this->fill<<' '<<this->stroke<<' '<<this->strokeWidth;
     }
     void Circle::Translate(double offx, double offy){
         this->cx+=offx;
