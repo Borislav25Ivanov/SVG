@@ -9,6 +9,18 @@ using std::string;
 using std::vector;
 
 vector<Figure *> figures;
+
+void PrintToFIle(string fileLoc){
+            string Template = "<svg width=\"1920\" height=\"1080\" xmlns=\"http://www.w3.org/2000/svg\">";
+            std::ofstream out(fileLoc);
+            out<<Template<<std::endl;
+            for(Figure * fig:figures){
+                fig->PrintToFile(out);
+                out<<std::endl;
+            }
+            out<<"</svg>";
+            out.close();
+}
 Figure * Factory(std::stringstream& in){
     string word;
     Figure * temp;
@@ -111,8 +123,9 @@ void Translate(const string horizontal,const string vertical,const string n){
     }
 }
 int main(){
+    string fileLoc;
     string input;
-    std::cin>>input;
+    std::getline(std::cin,input);
     while(input != "exit"){
 
         if(input == "print")Print();
@@ -151,14 +164,19 @@ int main(){
             
         }
         else if(input == "open"){
-            string fileLoc;
             std::cin>>fileLoc;
             Open(fileLoc);
         }
-        else if(input == "save as"){
-            
+        else if(input == "save"){
+        PrintToFIle(fileLoc);
         }
-        std::cin>>input;
+        else if(input == "save as"){
+            string fileToSaveTo;
+            std::cin>>fileToSaveTo;
+            PrintToFIle(fileToSaveTo);
+        }
+        std::getline(std::cin,input);
+        
     }
 }
     
