@@ -125,7 +125,7 @@ void Translate(const string horizontal,const string vertical,const string n){
 int main(){
     string fileLoc;
     string input;
-    std::getline(std::cin,input);
+    std::cin>>input;
     while(input != "exit"){
 
         if(input == "print")Print();
@@ -170,13 +170,12 @@ int main(){
         else if(input == "save"){
         PrintToFIle(fileLoc);
         }
-        else if(input == "save as"){
+        else if(input == "saveas"){
             string fileToSaveTo;
             std::cin>>fileToSaveTo;
             PrintToFIle(fileToSaveTo);
         }
-        std::getline(std::cin,input);
-        
+        std::cin>>input;        
     }
 }
     
