@@ -78,7 +78,7 @@
         <<"x2=\""<<this->x1<<"\""<<' '<<"y2=\""<<this->y1<<"\""<<' '<<' '
         <<"stroke=\""<<this->stroke<<"\""<<' '<<"stroke-width=\""<<this->strokeWidth<<"\""<<'/'<<'>';
     }
-    void Line::Translate(double offx, double offy){
+    void Line::Translate(const double offx,const double offy){
         this->x1+=offx;
         this->x2+=offx;
         this->y1+=offy;

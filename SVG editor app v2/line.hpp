@@ -9,7 +9,7 @@ class Line:public Figure{
     Line(double x1,double y1, double x2,double y2 , std::string stroke ,double strokeWidth);
     void Print()const;
     void PrintToFile(std::ostream& os)const;
-    void Translate(double x, double y);
+    void Translate(const double x,const double y);
     private:
     double x1=0,x2=0,y1=0,y2=0;
 };

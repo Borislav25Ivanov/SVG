@@ -76,7 +76,7 @@
     void Circle::Print()const{
         std::cout<<"circle "<<this->cx<<' '<<this->cy<<' '<<this->r<<' '<<this->fill<<' '<<this->stroke<<' '<<this->strokeWidth;
     }
-    void Circle::Translate(double offx, double offy){
+    void Circle::Translate(const double offx,const double offy){
         this->cx+=offx;
         this->cy+=offy;
     }

@@ -9,7 +9,7 @@ class Rectangle:public Figure{
     Rectangle(double x, double y,double width, double height,std::string fill, std::string stroke, double strokeWidth);
     void Print()const override;
     void PrintToFile(std::ostream& os)const override;
-    void Translate(double offx, double offy) override;
+    void Translate(const double offx,const double offy) override;
 
     private:
     double x =0,y=0,width=0,height=0;

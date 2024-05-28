@@ -9,7 +9,7 @@ class Circle:public Figure{
     Circle(double cx ,double  cy, double r,std::string fill,std::string stroke,double strokeWidth);
     void Print()const;
     void PrintToFile(std::ostream &out)const;
-    void  Translate(double x, double y);
+    void  Translate(const double x,const double y);
     
     private:
     double cx=0,cy=0,r=0;

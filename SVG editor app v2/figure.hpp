@@ -3,10 +3,10 @@
 #include <iostream>
 class Figure{
     public:
-    Figure();
+    Figure() = default;
     virtual void Print()const =0;
     virtual void PrintToFile(std::ostream &out)const =0;
-    virtual void  Translate(double offx, double offy) =0;
+    virtual void  Translate(const double offx,const double offy) =0;
     
     protected:
     std::string fill;   

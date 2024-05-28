@@ -8,10 +8,12 @@
 using std::string;
 using std::vector;
 
+string helpStr = "The following commands are supported:\nopen <file>	opens <file>\nclose	        closes currently opened file\nsave		saves the currently open file\nsaveas <file>	saves the currently open file in <file>\nprint     prints all figures from file\ncreate <figure>       creates ne figure <figure>\nerase <n>    erases figure with index <n>\ntranslate <horz> <vert>    translates all figures\ntranslate <horz> <vert> <n>     translates only figure with index <n>\nhelp		prints this information\nexit		exists the program";
 vector<Figure *> figures;
 
-void PrintToFIle(string fileLoc){
+void PrintToFIle(const string fileLoc){
             string Template = "<svg width=\"1920\" height=\"1080\" xmlns=\"http://www.w3.org/2000/svg\">";
+            if(fileLoc.substr(fileLoc.length()-3) != "svg")throw std::invalid_argument("Invalid file type!");
             std::ofstream out(fileLoc);
             out<<Template<<std::endl;
             for(Figure * fig:figures){
@@ -30,7 +32,6 @@ Figure * Factory(std::stringstream& in){
             string fill,stroke;
             in>>x>>y>>width>>height>>fill>>stroke>>strokeWidth;
             temp = new Rectangle(x,y,width,height,fill,stroke,strokeWidth);
-
         }
         else if(word == "circle"){
             double cx,cy,r,strokeWidth;
@@ -49,16 +50,17 @@ Figure * Factory(std::stringstream& in){
 
 
 
-void Open(string fileLoc){
+void Open(const string fileLoc){
     std::stringstream sso;
     std::ifstream in;
+    if(fileLoc.substr(fileLoc.length()-3) != "svg")throw std::invalid_argument("Invalid file type.");
     in.open(fileLoc.c_str());
     string word;
     if(in){
         sso<<in.rdbuf();
         in.close();
     }
-    else{std::cout<< "error";}
+    else{throw std::invalid_argument("Invalid file name.");}
     while (sso>>word)
     {
         if(word == "<rect"){
@@ -75,8 +77,6 @@ void Open(string fileLoc){
         }
     }
     
-
-    
 }
 void Print(){
     for(Figure* fig:figures){
@@ -84,7 +84,7 @@ void Print(){
         std::cout<<std::endl;
     }
 }
-void Create( std::stringstream& in){
+void Create(std::stringstream& in){
     Figure * temp = Factory(in);    
     figures.push_back(temp);
 }
@@ -144,7 +144,7 @@ int main(){
             }
             catch(const std::exception& e)
             {
-                std::cout<<"invalid index";
+                std::cout<<"Invalid index";
             }
             
         }
@@ -165,15 +165,47 @@ int main(){
         }
         else if(input == "open"){
             std::cin>>fileLoc;
-            Open(fileLoc);
+            try
+            {
+                Open(fileLoc);
+                std::cout<<"Successfully opened "<<fileLoc<<std::endl;
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
         }
         else if(input == "save"){
-        PrintToFIle(fileLoc);
+            try
+            {
+                PrintToFIle(fileLoc);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
         }
         else if(input == "saveas"){
             string fileToSaveTo;
             std::cin>>fileToSaveTo;
-            PrintToFIle(fileToSaveTo);
+            try
+            {
+                PrintToFIle(fileToSaveTo);
+                std::cout<<"Successfully save to "<<fileToSaveTo<<std::endl;
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            } 
+        }
+        else if(input == "close"){
+            figures.clear();
+            std::cout<<"Successfully closed "<<fileLoc<<std::endl;
+        }
+        else if(input == "help")
+        {
+            std::cout<<helpStr<<std::endl;
         }
         std::cin>>input;        
     }

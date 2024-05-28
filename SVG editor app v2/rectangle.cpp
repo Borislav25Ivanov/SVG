@@ -82,7 +82,7 @@
         <<"height=\""<<this->height<<"\""<<' '<<"fill=\""<<this->fill<<"\""<<' '<<"stroke=\""<<this->stroke<<"\""
         <<' '<<"stroke-width=\""<<this->strokeWidth<<"\""<<' '<<'/'<<'>';
     }
-    void Rectangle::Translate(double offx, double offy){
+    void Rectangle::Translate(const double offx,const double offy){
         this->x+=offx;
         this->y+=offy;
     }
