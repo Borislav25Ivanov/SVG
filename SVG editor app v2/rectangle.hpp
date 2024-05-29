@@ -6,12 +6,15 @@ class Rectangle:public Figure{
     public:
     Rectangle();
     Rectangle(std::stringstream& sso);
-    Rectangle(double x, double y,double width, double height,std::string fill, std::string stroke, double strokeWidth);
+    Rectangle(int x, int y,int width, int height,std::string fill, std::string stroke, double strokeWidth);
     void Print()const override;
     void PrintToFile(std::ostream& os)const override;
-    void Translate(const double offx,const double offy) override;
+    void Translate(const int offx,const int offy) override;
+    bool isInsideRect(int x,int y,int width,int height)const override;
+    bool isInsideCircle(int cx,int cy,int r)const override;
 
     private:
-    double x =0,y=0,width=0,height=0;
+    int x =0,y=0,width=0,height=0;
+    Type type = Figure::Type::Rectangle;
 };
 #endif

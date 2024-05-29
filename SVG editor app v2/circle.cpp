@@ -1,6 +1,8 @@
 #include "circle.hpp"
-    Circle::Circle(double cx ,double  cy, double r,std::string fill,std::string stroke,double strokeWidth)
+#include <cmath>
+    Circle::Circle(int cx ,int  cy, int r,std::string fill,std::string stroke,double strokeWidth)
     {
+        
         this->cx = cx;
         this->cy = cy;
         this->r = r;
@@ -12,6 +14,7 @@
 
     }
     Circle::Circle(std::stringstream& sso){
+        
         std::string word;
         while (sso>>word)
         {
@@ -76,7 +79,13 @@
     void Circle::Print()const{
         std::cout<<"circle "<<this->cx<<' '<<this->cy<<' '<<this->r<<' '<<this->fill<<' '<<this->stroke<<' '<<this->strokeWidth;
     }
-    void Circle::Translate(const double offx,const double offy){
+    void Circle::Translate(const int offx,const int offy){
         this->cx+=offx;
         this->cy+=offy;
+    }
+    bool Circle::isInsideRect(int x,int y,int width, int height)const{
+        return((cx-r>x) && (cy - r>y) && (cy+r-y<height) && (cx+r-x<width));
+    }
+    bool Circle::isInsideCircle(int cx, int cy,int r)const {
+        return(std::sqrt((this->cx - cx)*(this->cx - cx) + (this->cy - cy)*(this->cy - cy))<=r-this->r);
     }

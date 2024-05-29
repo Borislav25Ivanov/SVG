@@ -23,24 +23,29 @@ void PrintToFIle(const string fileLoc){
             out<<"</svg>";
             out.close();
 }
+
+
 Figure * Factory(std::stringstream& in){
     string word;
     Figure * temp;
     in>>word;
         if(word == "rectangle"){
-            double x,y,width,height,strokeWidth;
+            int x,y,width,height;
+            double strokeWidth;
             string fill,stroke;
             in>>x>>y>>width>>height>>fill>>stroke>>strokeWidth;
             temp = new Rectangle(x,y,width,height,fill,stroke,strokeWidth);
         }
         else if(word == "circle"){
-            double cx,cy,r,strokeWidth;
+            int cx,cy,r;
+            double strokeWidth;
             string fill,stroke;
             in>>cx>>cy>>r>>fill>>stroke>>strokeWidth;
             temp = new Circle(cx,cy,r,fill,stroke,strokeWidth);
         }
         else if(word == "line"){
-            double x1,y1,x2,y2,strokeWidth;
+            int x1,y1,x2,y2;
+            double strokeWidth;
             string stroke;
             in>>x1>>y1>>x2>>y2>>stroke>>strokeWidth;
             temp = new Line(x1,y1,x2,y2,stroke,strokeWidth);
@@ -206,6 +211,36 @@ int main(){
         else if(input == "help")
         {
             std::cout<<helpStr<<std::endl;
+        }
+        else if(input == "within"){
+            
+            string area;
+            std::cin>>area;
+            if(area == "rectangle"){
+                int x,y,height,width;
+                size_t counter = 0;
+                std::cin>>x>>y>>width>>height;
+                for(Figure * fig :figures)
+                    if(fig->isInsideRect(x,y,width,height)){
+                        counter ++ ;
+                        fig->Print();
+                        std::cout<<std::endl;
+                    }
+                if(counter == 0)std::cout<<"no figures in area!";
+            }
+            else if(area == "circle"){
+                int cx,cy,r;
+                std::cin>>cx>>cy>>r;
+                size_t counter = 0;
+                for(Figure * fig:figures)
+                    if(fig->isInsideCircle(cx,cy,r)){
+                        counter++;
+                        fig->Print();
+                        std::cout<<std::endl;
+                    }
+                if(counter == 0)std::cout<<"no figures in area!";
+            }
+           
         }
         std::cin>>input;        
     }

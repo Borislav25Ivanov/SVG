@@ -1,5 +1,6 @@
 #include "rectangle.hpp"
-    Rectangle::Rectangle(double x, double y,double width, double height,std::string fill, std::string stroke, double strokeWidth){
+#include <cmath>
+    Rectangle::Rectangle(int x, int y,int width, int height,std::string fill, std::string stroke, double strokeWidth){
         this->x = x;
         this->y = y;
         this->width = width;
@@ -82,7 +83,16 @@
         <<"height=\""<<this->height<<"\""<<' '<<"fill=\""<<this->fill<<"\""<<' '<<"stroke=\""<<this->stroke<<"\""
         <<' '<<"stroke-width=\""<<this->strokeWidth<<"\""<<' '<<'/'<<'>';
     }
-    void Rectangle::Translate(const double offx,const double offy){
+    void Rectangle::Translate(const int offx,const int offy){
         this->x+=offx;
         this->y+=offy;
+    }
+    bool Rectangle::isInsideRect(int x,int y,int width,int height)const {
+        return((x<this->x) && (this->x - x + this->width<width) && (y<this->y) && (this->y - y + this->height<height));
+    }
+    bool Rectangle::isInsideCircle(int cx,int cy,int r)const {
+        return std::pow(this->x - cx,2)+std::pow(this->y - cy,2)<=r * r &&
+        std::pow(this->x - cx + width,2)+std::pow(this->y - cy + height,2)<=r * r &&
+        std::pow(this->x - cx + width,2)+std::pow(this->y - cy,2)<=r * r &&
+        std::pow(this->x - cx,2)+std::pow(this->y - cy + height,2)<=r * r;
     }

@@ -6,13 +6,16 @@ class Circle:public Figure{
     public:
     Circle();
     Circle(std::stringstream& sso);
-    Circle(double cx ,double  cy, double r,std::string fill,std::string stroke,double strokeWidth);
+    Circle(int cx ,int  cy, int r,std::string fill,std::string stroke,double strokeWidth);
     void Print()const;
     void PrintToFile(std::ostream &out)const;
-    void  Translate(const double x,const double y);
+    void  Translate(const int x,const int y);
+    bool isInsideRect(int x,int y,int width, int height)const override;
+    bool isInsideCircle(int cx, int cy,int r)const override;
     
     private:
-    double cx=0,cy=0,r=0;
+    int cx=0,cy=0,r=0;
+    Type Type = Figure::Type::Circle;
     
 };
 
